@@ -1,0 +1,33 @@
+#PROGRAM DATA FITTING
+
+#Import Library
+from numpy import arange
+from scipy.optimize import curve_fit
+from matplotlib import pyplot
+ 
+#Define the true objective function
+def objective(x, a, b, c):
+	return a * np.exp(b * (x/10)) + c
+
+#Curve fit
+popt, _ = curve_fit(objective, x, y)
+
+#Summarize the parameter values
+a, b, c = popt
+print('y = %.5f * e ^(%.5f * (x/10)) + %.5f' % (a, b, c))
+
+#Plot input vs output
+pyplot.scatter(x, y)
+
+#Line plot
+plt.plot(x, y)
+
+#Define a sequence of inputs between the smallest and largest known inputs
+x_line = arange(min(x), max(x), 1)
+
+#Calculate the output for the range
+y_line = objective(x_line, a, b, c)
+
+#Create a line plot for the mapping function
+pyplot.plot(x_line, y_line, '--', color='red')
+pyplot.show()
